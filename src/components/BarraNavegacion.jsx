@@ -1,13 +1,25 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 function BarraNavegacion() {
+  const location = useLocation()
+
+  const linkClass = (path) =>
+    `px-3 py-2 rounded-lg text-sm transition-colors duration-200 ${
+      location.pathname === path
+        ? "bg-slate-700 text-slate-100"
+        : "text-slate-400 hover:text-slate-200 hover:bg-slate-700"
+    }`
+
   return (
-    <nav style={{ background: "#2c3e50", padding: "1rem 2rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-      <h2 style={{ color: "white", margin: 0 }}>🛍️ Gestor de Productos</h2>
-      <div style={{ display: "flex", gap: "1.5rem" }}>
-        <Link to="/" style={{ color: "white", textDecoration: "none" }}>Inicio</Link>
-        <Link to="/productos" style={{ color: "white", textDecoration: "none" }}>Productos</Link>
-        <Link to="/agregar" style={{ color: "white", textDecoration: "none" }}>Agregar Producto</Link>
+    <nav className="bg-slate-800 border-b border-slate-700 px-6 py-4 flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <span className="text-lg">🛍️</span>
+        <h1 className="text-slate-100 font-medium text-lg">Gestor de Productos</h1>
+      </div>
+      <div className="flex items-center gap-1">
+        <Link to="/" className={linkClass("/")}>Inicio</Link>
+        <Link to="/productos" className={linkClass("/productos")}>Productos</Link>
+        <Link to="/agregar" className={linkClass("/agregar")}>Agregar Producto</Link>
       </div>
     </nav>
   )

@@ -1,15 +1,13 @@
 import { createContext, useState, useEffect } from "react"
 
-export const ProductoContext = createContext()
+export const ProductoContext = createContext()  // ← aquí estaba el problema
 
 export function ProductoProvider({ children }) {
   const [productos, setProductos] = useState(() => {
-    // ✅ Carga inicial directamente en el useState, no en un useEffect
     const productosGuardados = localStorage.getItem("productos")
     return productosGuardados ? JSON.parse(productosGuardados) : []
   })
 
-  // Guardar en localStorage cada vez que cambien los productos
   useEffect(() => {
     localStorage.setItem("productos", JSON.stringify(productos))
   }, [productos])

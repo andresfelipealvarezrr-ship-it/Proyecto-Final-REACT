@@ -7,13 +7,7 @@ function EditarProducto() {
   const navigate = useNavigate()
   const { id } = useParams()
 
-  const [formulario, setFormulario] = useState({
-    nombre: "",
-    descripcion: "",
-    precio: "",
-    categoria: ""
-  })
-
+  const [formulario, setFormulario] = useState({ nombre: "", descripcion: "", precio: "", categoria: "" })
   const [errores, setErrores] = useState({})
 
   const categorias = ["Electrónica", "Ropa", "Alimentos", "Hogar", "Deportes", "Otros"]
@@ -32,66 +26,58 @@ function EditarProducto() {
     return nuevosErrores
   }
 
-  const manejarCambio = (e) => {
-    setFormulario({ ...formulario, [e.target.name]: e.target.value })
-  }
+  const manejarCambio = (e) => setFormulario({ ...formulario, [e.target.name]: e.target.value })
 
   const manejarEnvio = (e) => {
     e.preventDefault()
     const erroresEncontrados = validar()
-    if (Object.keys(erroresEncontrados).length > 0) {
-      setErrores(erroresEncontrados)
-      return
-    }
+    if (Object.keys(erroresEncontrados).length > 0) { setErrores(erroresEncontrados); return }
     editarProducto({ ...formulario, precio: Number(formulario.precio) })
     navigate("/productos")
   }
 
+  const inputClass = "w-full px-4 py-2 bg-slate-900 border border-slate-600 text-slate-100 placeholder-slate-500 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 mt-1"
+
   return (
-    <div style={{ maxWidth: "500px", margin: "2rem auto", padding: "2rem", background: "white", borderRadius: "10px", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
-      <h2 style={{ color: "#2c3e50", marginBottom: "1.5rem" }}>Editar Producto</h2>
-      <form onSubmit={manejarEnvio}>
-
-        <div style={{ marginBottom: "1rem" }}>
-          <label>Nombre</label>
-          <input name="nombre" value={formulario.nombre} onChange={manejarCambio}
-            style={{ width: "100%", padding: "0.6rem", borderRadius: "6px", border: "1px solid #ddd", marginTop: "0.3rem" }} />
-          {errores.nombre && <p style={{ color: "red", fontSize: "0.85rem" }}>{errores.nombre}</p>}
-        </div>
-
-        <div style={{ marginBottom: "1rem" }}>
-          <label>Descripción</label>
-          <textarea name="descripcion" value={formulario.descripcion} onChange={manejarCambio}
-            style={{ width: "100%", padding: "0.6rem", borderRadius: "6px", border: "1px solid #ddd", marginTop: "0.3rem" }} />
-          {errores.descripcion && <p style={{ color: "red", fontSize: "0.85rem" }}>{errores.descripcion}</p>}
-        </div>
-
-        <div style={{ marginBottom: "1rem" }}>
-          <label>Precio</label>
-          <input name="precio" type="number" value={formulario.precio} onChange={manejarCambio}
-            style={{ width: "100%", padding: "0.6rem", borderRadius: "6px", border: "1px solid #ddd", marginTop: "0.3rem" }} />
-          {errores.precio && <p style={{ color: "red", fontSize: "0.85rem" }}>{errores.precio}</p>}
-        </div>
-
-        <div style={{ marginBottom: "1.5rem" }}>
-          <label>Categoría</label>
-          <select name="categoria" value={formulario.categoria} onChange={manejarCambio}
-            style={{ width: "100%", padding: "0.6rem", borderRadius: "6px", border: "1px solid #ddd", marginTop: "0.3rem" }}>
-            <option value="">Selecciona una categoría</option>
-            {categorias.map((cat) => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </select>
-          {errores.categoria && <p style={{ color: "red", fontSize: "0.85rem" }}>{errores.categoria}</p>}
-        </div>
-
-        <button type="submit" style={{
-          width: "100%", padding: "0.8rem", background: "#f39c12",
-          color: "white", border: "none", borderRadius: "8px", fontSize: "1rem", cursor: "pointer"
-        }}>
-          Guardar Cambios
-        </button>
-      </form>
+    <div className="min-h-screen bg-slate-900 flex items-center justify-center px-4 py-10">
+      <div className="bg-slate-800 w-full max-w-lg rounded-xl border border-slate-700 p-8">
+        <h2 className="text-xl font-medium text-slate-100 mb-6">Editar Producto</h2>
+        <form onSubmit={manejarEnvio} className="flex flex-col gap-4">
+          <div>
+            <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">Nombre</label>
+            <input name="nombre" value={formulario.nombre} onChange={manejarCambio} className={inputClass} />
+            {errores.nombre && <p className="text-red-400 text-xs mt-1">{errores.nombre}</p>}
+          </div>
+          <div>
+            <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">Descripción</label>
+            <textarea name="descripcion" value={formulario.descripcion} onChange={manejarCambio} rows={3} className={inputClass} />
+            {errores.descripcion && <p className="text-red-400 text-xs mt-1">{errores.descripcion}</p>}
+          </div>
+          <div>
+            <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">Precio</label>
+            <input name="precio" type="number" value={formulario.precio} onChange={manejarCambio} className={inputClass} />
+            {errores.precio && <p className="text-red-400 text-xs mt-1">{errores.precio}</p>}
+          </div>
+          <div>
+            <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">Categoría</label>
+            <select name="categoria" value={formulario.categoria} onChange={manejarCambio} className={inputClass}>
+              <option value="">Selecciona una categoría</option>
+              {categorias.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
+            </select>
+            {errores.categoria && <p className="text-red-400 text-xs mt-1">{errores.categoria}</p>}
+          </div>
+          <div className="flex gap-3 mt-2">
+            <button type="button" onClick={() => navigate("/productos")}
+              className="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-300 font-medium py-3 rounded-lg text-sm transition-colors duration-200">
+              Cancelar
+            </button>
+            <button type="submit"
+              className="flex-1 bg-amber-600 hover:bg-amber-500 text-white font-medium py-3 rounded-lg text-sm transition-colors duration-200">
+              Guardar Cambios
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }
