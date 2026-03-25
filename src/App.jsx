@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { ProductoProvider } from "./context/ProductoContext"
-import BarraNavegacion from "./components/barraNavegacion"
+import BarraNavegacion from './components/BarraNavegacion'
 import Inicio from "./pages/Inicio"
 import Productos from "./pages/Productos"
 import AgregarProducto from "./pages/AgregarProducto"
 import EditarProducto from "./pages/EditarProducto"
-import NoEncontrado from "./pages/Noencontrado"
+import NoEncontrado from './pages/NoEncontrado'
 
 function App() {
   return (
